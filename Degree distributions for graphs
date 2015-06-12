@@ -37,18 +37,12 @@ def make_complete_graph(num_nodes):
     return dic
 
 def compute_in_degrees(digraph):
-    '''
-    computes the in-degrees for the nodes in the graph
-    '''
     dic = {}
     for idx in digraph:
-        count = 0
-        for jdx in digraph:
-            for kdx in digraph[jdx]:
-                if kdx == idx:
-                    count += 1
-        dic[idx] = count
-        
+        dic[idx] = 0
+    for idx in digraph:
+        for jdx in digraph[idx]:
+            dic[jdx] += 1
     return dic
 
 def in_degree_distribution(digraph):
@@ -58,11 +52,11 @@ def in_degree_distribution(digraph):
     dic = {}
     deg = compute_in_degrees(digraph)
     for idx in range(len(deg)):
-        count = 0
-        for jdx in deg:
-            if deg[jdx] == idx:
-                count += 1
-        if count != 0:
-            dic[idx] = count
+        dic[idx] = 0
+    for jdx in deg:
+        dic[deg[jdx]] += 1
+    for kdx in dic:
+        if dic[kdx] == 0:
+            del dic[kdx]
         
     return dic
